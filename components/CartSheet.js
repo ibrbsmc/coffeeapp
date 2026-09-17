@@ -11,7 +11,7 @@ import {
   SheetFooter,
 } from "@/components/ui/sheet";
 import { ShoppingCart, Trash2, Plus, Minus } from "lucide-react";
-import useCartStore from "@/store/cartStore";
+import useCartStore, { selectTotalCount, selectTotalPrice } from "@/store/cartStore";
 import { getDiscountedPrice, formatPrice } from "@/lib/pricing";
 
 export default function CartSheet() {
@@ -21,15 +21,13 @@ export default function CartSheet() {
   const decreaseQuantity = useCartStore((state) => state.decreaseQuantity);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const clearCart = useCartStore((state) => state.clearCart);
-  const getTotalCount = useCartStore((state) => state.getTotalCount);
-  const getTotalPrice = useCartStore((state) => state.getTotalPrice);
+  const totalCount = useCartStore(selectTotalCount);
+  const totalPrice = useCartStore(selectTotalPrice);
 
   // Render sonrası okunur, hydration uyuşmazlığını önler
   useEffect(() => {
     useCartStore.persist.rehydrate();
   }, []);
-
-  const totalCount = getTotalCount();
 
   return (
     <Sheet>
@@ -123,7 +121,7 @@ export default function CartSheet() {
             <div className="flex items-center justify-between w-full">
               <span className="text-sm text-mauve-400">Total</span>
               <span className="text-lg font-bold text-mauve-100">
-                {formatPrice(getTotalPrice())}
+                {formatPrice(totalPrice)}
               </span>
             </div>
 

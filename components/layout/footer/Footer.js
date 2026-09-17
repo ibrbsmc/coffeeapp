@@ -76,11 +76,11 @@ export default function Footer() {
                 <span className="leading-none">ibrbsmc@gmail.com</span>
               </a>
               <a
-                href="tel:+05428247506"
+                href="tel:+905428247506"
                 className="text-mauve-400 text-sm hover:text-mauve-100 transition-colors duration-300 flex items-center gap-2"
               >
                 <Phone size={14} />
-                <span className="leading-none">+90 555 123 45 67</span>
+                <span className="leading-none">+90 542 824 75 06</span>
               </a>
               <span className="text-mauve-400 text-sm flex items-center gap-2">
                 <MapPin size={14} />

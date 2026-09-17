@@ -15,7 +15,7 @@ function toCartItem(product) {
 
 const useCartStore = create(
   persist(
-    (set, get) => ({
+    (set) => ({
       cart: [],
 
       // localStorage okunduğunda true olur
@@ -56,15 +56,6 @@ const useCartStore = create(
         })),
 
       clearCart: () => set({ cart: [] }),
-
-      getTotalCount: () =>
-        get().cart.reduce((total, item) => total + item.quantity, 0),
-
-      getTotalPrice: () =>
-        get().cart.reduce(
-          (total, item) => total + getDiscountedPrice(item.price) * item.quantity,
-          0
-        ),
     }),
     {
       name: "coffee-app-cart",
@@ -73,5 +64,20 @@ const useCartStore = create(
     }
   )
 );
+
+// Selector olarak kullanılır: useCartStore(selectTotalCount).
+// Bağımlı olduğu veri (cart) selector'ın kendi girdisinden geldiği için
+// React Compiler yanlış memoize etmez; store action'ı olarak çağrılan bir
+// fonksiyondan farklı olarak her state değişiminde yeniden hesaplanır.
+export function selectTotalCount(state) {
+  return state.cart.reduce((total, item) => total + item.quantity, 0);
+}
+
+export function selectTotalPrice(state) {
+  return state.cart.reduce(
+    (total, item) => total + getDiscountedPrice(item.price) * item.quantity,
+    0
+  );
+}
 
 export default useCartStore;

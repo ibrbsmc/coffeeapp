@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
@@ -12,9 +13,10 @@ import { NAV_LINKS } from "@/lib/navigation";
 
 export function MobileHeader() {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <button
           aria-label="Menüyü aç"
@@ -41,6 +43,7 @@ export function MobileHeader() {
               <Link
                 key={link.name}
                 href={link.href}
+                onClick={() => setOpen(false)}
                 className={`py-4 text-sm font-(family-name:--font-merienda) border-b border-mauve-800/50 transition-colors duration-300
                   ${isActive
                     ? "text-mauve-100"
